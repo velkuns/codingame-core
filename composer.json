@@ -1,0 +1,19 @@
+{
+  "name": "velkuns/codingame-core",
+  "description": "Core Application / Library for Codingame puzzle / challenges",
+  "type": "library",
+  "license": "MIT",
+
+  "authors": [
+    {
+      "name": "Romain Cottard",
+      "role": "Developer"
+    }
+  ],
+
+  "autoload": {
+    "psr-4": {
+      "Velkuns\\Codingame\\Core\\": "./src"
+    }
+  }
+}

@@ -68,21 +68,20 @@ class Compiler
         $compiled = '';
 
         foreach ($this->sources as $directory) {
-            $fullPathname = $this->rootDir . '/' . $directory;
+            $fullPathname = $this->rootDir . $directory;
 
             $recursiveDirectoryIterator = new \RecursiveDirectoryIterator($fullPathname);
 
             foreach (new \RecursiveIteratorIterator($recursiveDirectoryIterator) as $file) {
 
-                $filePathnameWithoutRoot = str_replace($this->rootDir, '', $fullPathname);
-                if ($file->isDot() || $file->getExtension() !== 'php' || in_array($filePathnameWithoutRoot, $this->exclude)) {
+                if ($file->isDir() || $file->getExtension() !== 'php' || in_array($directory, $this->exclude)) {
                     continue;
                 }
 
                 $compiled .= $this->replaceHeader(
                     $this->read($file->getPathname()),
-                    $filePathnameWithoutRoot,
-                    $directory
+                    $file->getPathname(),
+                    $fullPathname
                 );
             }
         }
@@ -98,13 +97,13 @@ class Compiler
      * @param string $directory
      * @return string
      */
-    private function replaceHeader(string $content, string $classFile, string $directory): string
+    private function replaceHeader(string $content, string $classFile, string $fullPathname): string
     {
-        $className = str_replace('/', '\\', trim(str_replace([$directory, '.php'], '', $classFile), '/'));
+        $className = str_replace('/', '\\', trim(str_replace([$fullPathname, '.php'], '', $classFile), '/'));
         $comment   = "\n// ============== ${className} ==============";
         $replace   = [
             '`<\?php`'                                                                                                                                                                                    => '',
-            "`\/\*\n \* Copyright \(c\) $this->copyright\n \*\n \* For the full copyright and license information, please view the LICENSE\n \* file that was distributed with this source code\.\n \*\/`m" => $comment,
+            "`\/\*\n \* Copyright \(c\) $this->copyright\n \*\n \* For the full copyright and license information, please view the LICENSE\n \* file that was distributed with this source code\.\n \*\\n*/`m" => $comment,
             "`namespace .+;`"                                                                                                                                                                             => '',
             "`use .+;`"                                                                                                                                                                                   => '',
             "`^\n+$`m"                                                                                                                                                                                    => '',
@@ -129,7 +128,7 @@ class Compiler
     private function write($content): void
     {
         echo 'Writing: ... ';
-        file_put_contents($this->distributionFile, $content);
+        file_put_contents($this->rootDir . '/' . $this->distributionFile, $content);
         echo 'done' . PHP_EOL;
     }
 
@@ -139,7 +138,7 @@ class Compiler
     private function check(): void
     {
         echo 'Checking syntax: ... ';
-        $result = exec('php -l ' . $this->distributionFile, $content);
+        $result = exec('php -l ' . $this->rootDir . '/' . $this->distributionFile, $content);
 
         if (substr($result, 0, 16) === 'No syntax errors') {
             echo 'OK' . PHP_EOL;

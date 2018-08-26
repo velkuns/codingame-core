@@ -19,6 +19,9 @@ class Compiler
     /** @var string  */
     private $copyright = '';
 
+    /** @var bool  */
+    private $gameLoop = false;
+
     /** @var string */
     private $rootDir = '';
 
@@ -45,6 +48,7 @@ class Compiler
         $this->exclude          = $config['exclude']   ?? ['/vendor/velkuns/codingame-core/src/Compiler'];
         $this->distributionFile = $config['dist']      ?? '/dist/codingame.php';
         $this->copyright        = $config['copyright'] ?? '';
+        $this->gameLoop         = $config['gameLoop']  ?? false;
     }
 
     /**
@@ -94,7 +98,7 @@ class Compiler
     /**
      * @param string $content
      * @param string $classFile
-     * @param string $directory
+     * @param string $fullPathname
      * @return string
      */
     private function replaceHeader(string $content, string $classFile, string $fullPathname): string
@@ -152,8 +156,7 @@ class Compiler
      */
     private function getTemplate(): string
     {
-        return <<<TEMPLATE
-<?php
+        return "<?php
 
 /*
  * Copyright (c) $this->copyright
@@ -164,7 +167,7 @@ class Compiler
 
 #COMPILED_CODE#
 
-(new Application(new Game()))->run();
-TEMPLATE;
+(new Application(new Game(), " . var_export($this->gameLoop, true) . ")->run();
+";
     }
 }

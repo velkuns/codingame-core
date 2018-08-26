@@ -14,7 +14,7 @@ namespace Velkuns\Codingame\Core\Collection;
  *
  * @author Romain Cottard
  */
-abstract class AbstractCollection implements CollectionInterface
+abstract class Collection implements \Iterator, \Countable
 {
     /** @var array $collection  */
     protected $collection = [];
@@ -31,9 +31,9 @@ abstract class AbstractCollection implements CollectionInterface
     /**
      * @param mixed $element
      * @param string|int|null $index
-     * @return CollectionInterface
+     * @return $this
      */
-    public function add($element, $index = null): CollectionInterface
+    public function add($element, $index = null): self
     {
         $this->indices[$this->size] = $index ?? $this->size;
         $this->collection[$this->indices[$this->size]] = $element;

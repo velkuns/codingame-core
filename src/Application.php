@@ -20,16 +20,21 @@ use Velkuns\Codingame\Core\Logger\Logger;
 final class Application
 {
     /** @var GameInterface $game */
-    private $game = null;
+    private $game;
+
+    /** @var bool $hasLoop */
+    private $hasLoop;
 
     /**
      * Application constructor.
      *
      * @param GameInterface $game
+     * @param bool $hasLoop
      */
-    public function __construct(GameInterface $game)
+    public function __construct(GameInterface $game, $hasLoop = false)
     {
-        $this->game = $game;
+        $this->game    = $game;
+        $this->hasLoop = $hasLoop;
     }
 
     /**
@@ -49,6 +54,11 @@ final class Application
 
                 Logger::error($exception->getMessage());
                 $this->game->endTurn();
+            }
+
+            //~ When no loop, break after first run.
+            if (!$this->hasLoop) {
+                break;
             }
         }
     }

@@ -167,7 +167,7 @@ class Compiler
 
 #COMPILED_CODE#
 
-(new Application(new Game(), " . var_export($this->gameLoop, true) . ")->run();
+(new Application(new Game(), " . var_export($this->gameLoop, true) . "))->run();
 ";
     }
 }

@@ -82,11 +82,7 @@ class Compiler
                     continue;
                 }
 
-                $compiled .= $this->replaceHeader(
-                    $this->read($file->getPathname()),
-                    $file->getPathname(),
-                    $fullPathname
-                );
+                $compiled .= $this->replaceHeader($this->read($file->getPathname()));
             }
         }
 
@@ -97,20 +93,17 @@ class Compiler
 
     /**
      * @param string $content
-     * @param string $classFile
-     * @param string $fullPathname
      * @return string
      */
-    private function replaceHeader(string $content, string $classFile, string $fullPathname): string
+    private function replaceHeader(string $content): string
     {
-        $className = str_replace('/', '\\', trim(str_replace([$fullPathname, '.php'], '', $classFile), '/'));
-        $comment   = "\n// ============== ${className} ==============";
         $replace   = [
-            '`<\?php`'                                                                                                                                                                                    => '',
-            "`\/\*\n \* Copyright \(c\) $this->copyright\n \*\n \* For the full copyright and license information, please view the LICENSE\n \* file that was distributed with this source code\.\n \*\\n*/`m" => $comment,
-            "`namespace .+;`"                                                                                                                                                                             => '',
-            "`use .+;`"                                                                                                                                                                                   => '',
-            "`^\n+$`m"                                                                                                                                                                                    => '',
+            '`<\?php`' => '',
+            "`\/\*\n \* Copyright \(c\) Romain Cottard\n \*\n \* For the full copyright and license information, please view the LICENSE\n \* file that was distributed with this source code\.\n \*\\n*/`m" => '',
+            "`\/\*\n \* Copyright \(c\) $this->copyright\n \*\n \* For the full copyright and license information, please view the LICENSE\n \* file that was distributed with this source code\.\n \*\\n*/`m" => '',
+            "`namespace .+;`" => '',
+            "`use .+;`" => '',
+            "`^\n+$`m" => '',
         ];
 
         return preg_replace(array_keys($replace), array_values($replace), $content);

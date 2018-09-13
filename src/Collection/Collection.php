@@ -33,7 +33,7 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
     /**
      * @param mixed $element
      * @param string|int|null $index
-     * @return $this
+     * @return void
      */
     public function add($element, $index = null): void
     {
@@ -100,7 +100,7 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
      */
     public function current()
     {
-        return $this->collection[$this->index];
+        return $this->collection[$this->indices[$this->index]];
     }
 
     /**
@@ -108,7 +108,7 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
      */
     public function key()
     {
-        return $this->index;
+        return $this->indices[$this->index];
     }
 
     /**

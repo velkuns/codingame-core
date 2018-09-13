@@ -17,6 +17,16 @@ namespace Velkuns\Codingame\Core\IO;
 final class Input
 {
     /**
+     * @param int $length
+     * @param string $lineEnd
+     * @return string
+     */
+    public static function readLine(int $length = 1025, $lineEnd = "\n"): string
+    {
+        return trim(stream_get_line(STDIN, $length, $lineEnd));
+    }
+
+    /**
      * @param string $format
      * @return array
      */

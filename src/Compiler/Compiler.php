@@ -102,7 +102,7 @@ class Compiler
             "`\/\*\n \* Copyright \(c\) Romain Cottard\n \*\n \* For the full copyright and license information, please view the LICENSE\n \* file that was distributed with this source code\.\n \*\\n*/`m" => '',
             "`\/\*\n \* Copyright \(c\) $this->copyright\n \*\n \* For the full copyright and license information, please view the LICENSE\n \* file that was distributed with this source code\.\n \*\\n*/`m" => '',
             "`namespace .+;`" => '',
-            "`use .+;`" => '',
+            "`^use .+;$`m" => '',
             "`^\n+$`m" => '',
         ];
 

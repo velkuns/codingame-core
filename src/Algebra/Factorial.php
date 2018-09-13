@@ -7,20 +7,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Velkuns\Codingame\Core\Math;
+namespace Velkuns\Codingame\Core\Algebra;
 
 /**
  * Class Math
  *
  * @author Romain Cottard
  */
-final class Math
+final class Factorial
 {
     /**
      * @param int $n
      * @return int
      */
-    public static function factorial(int $n): int
+    public static function get(int $n): int
     {
         if ($n <= 0) {
             return 0;
@@ -39,13 +39,13 @@ final class Math
      * @param array $count
      * @return int
      */
-    public static function factorialMultiple(int $n, array $count): int
+    public static function getMultiple(int $n, array $count): int
     {
-        $factorial = static::factorial($n);
+        $factorial = static::get($n);
 
         $divider = 1;
         foreach ($count as $value) {
-            $divider *= $value > 2 ? static::factorial($value) : $value;
+            $divider *= $value > 2 ? static::get($value) : $value;
         }
 
         return (int) ($factorial / $divider);

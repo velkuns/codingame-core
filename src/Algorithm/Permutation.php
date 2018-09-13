@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Velkuns\Codingame\Core\Math;
+namespace Velkuns\Codingame\Core\Algorithm;
+
+use Velkuns\Codingame\Core\Algebra\Factorial;
 
 /**
  * Class Permutation
@@ -49,7 +51,7 @@ final class Permutation
             return;
         }
 
-        $factorial = Math::factorial($numberOfElement - 1);
+        $factorial = Factorial::get($numberOfElement - 1);
         $index     = (int) ($seed / $factorial);
 
         $permutations[] = $elements[$index];

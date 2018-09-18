@@ -34,4 +34,14 @@ final class Input
     {
         return fscanf(STDIN, $format);
     }
+
+    /**
+     * @return int
+     */
+    public static function readInt(): int
+    {
+        fscanf(STDIN, '%d', $number);
+
+        return (int) $number;
+    }
 }

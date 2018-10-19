@@ -23,10 +23,9 @@ interface StateInterface
     public function getTriggers(TriggerInputsState $inputs): array;
 
     /**
-     * @param StateInterface $currentState
      * @param StateInterface $nextState
      * @param TriggerStateInterface $trigger
-     * @return void
+     * @return StateInterface
      */
-    public function transitionTo(StateInterface $currentState, StateInterface $nextState, TriggerStateInterface $trigger): void;
+    public function handleTrigger(StateInterface $nextState, TriggerStateInterface $trigger): StateInterface;
 }

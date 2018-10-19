@@ -24,8 +24,7 @@ final class TriggerStateHandler implements TriggerStateHandlerInterface
             $isValidTrigger = $trigger->isValid();
             $this->debug($trigger, $isValidTrigger);
             if ($isValidTrigger) {
-                $nextState = $trigger->getNextState();
-                $nextState->transitionTo($currentState, $nextState, $trigger);
+                $nextState = $currentState->handleTrigger($trigger->getNextState(), $trigger);
                 break;
             }
         }

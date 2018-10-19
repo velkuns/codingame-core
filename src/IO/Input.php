@@ -44,4 +44,16 @@ final class Input
 
         return (int) $number;
     }
+
+    /**
+     * @return float
+     */
+    public static function readFloat(): float
+    {
+        fscanf(STDIN, '%s', $number);
+
+        $number = str_replace(',', '.', $number);
+
+        return (float) $number;
+    }
 }

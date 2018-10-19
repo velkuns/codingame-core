@@ -78,7 +78,9 @@ class Compiler
 
             foreach (new \RecursiveIteratorIterator($recursiveDirectoryIterator) as $file) {
 
-                if ($file->isDir() || $file->getExtension() !== 'php' || in_array($directory, $this->exclude)) {
+                $dirname = str_replace($this->rootDir, '', dirname($file->getPathname()));
+
+                if ($file->isDir() || $file->getExtension() !== 'php' || in_array($dirname, $this->exclude)) {
                     continue;
                 }
 

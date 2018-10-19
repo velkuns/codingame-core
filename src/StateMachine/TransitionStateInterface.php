@@ -16,12 +16,12 @@ interface TransitionStateInterface
      * @param StateInterface $nextState
      * @param TriggerStateInterface $trigger
      * @param TriggerInputsState $inputs
-     * @return void
+     * @return StateInterface
      */
     public function apply(
         StateInterface $currentState,
         StateInterface $nextState,
         TriggerStateInterface $trigger,
         TriggerInputsState $inputs
-    ): void;
+    ): StateInterface;
 }
